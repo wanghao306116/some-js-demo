@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            box-sizing:border-box;
+        }
+        .tab{
+            width:500px;
+            /* border:1px solid red; */
+            margin:100px auto;
+        }
+        ul{
+            display:flex;
+
+        }
+        li{
+            padding:10px 20px;
+            border:1px solid #aaa;
+            margin:0 10px 0 0px;
+            color:blue;
+            z-index:9;
+        }
+        li.cons{
+            border-bottom:1px solid #fff;
+        }
+        /* li>div{
+            
+        } */
+        li>div:hover{
+            color:red;
+        }
+        .content{
+            border: 1px solid #aaa;
+            position:relative;
+            top:-1px;
+        }
+        .content>div{
+            width:500px;
+            height:100px;
+            text-align:center;
+            padding:35px 0;
+            display:none;
+        }
+        .content>.curr{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <ul>
+            <li class="cons"><div>电器</div></li>
+            <li><div>数码</div></li>
+            <li><div>家居</div></li>
+            <li><div>男装</div></li>
+        </ul>
+        <div class="content">
+            <div class="curr">电器大全</div>
+            <div>数码机械</div>
+            <div>家具俱全</div>
+            <div>男装女装</div>
+        </div>
+    </div>
+    <script>
+        const list = document.querySelectorAll('ul>li');
+        const items = document.querySelectorAll('.content>div')
+        console.log(items)
+        for(let i=0;i<list.length;i++){
+            list[i].addEventListener('click',function(e){
+                for(let j=0; j<list.length;j++){
+                    list[j].classList.remove('cons');
+                    items[j].classList.remove('curr');
+                }
+                list[i].classList.add('cons');
+                items[i].classList.add('curr')
+            })
+        }
+    </script>
+</body>
+</html>

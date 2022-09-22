@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/01.css">
+    <title>Document</title>
+    <style>
+        .notouch{
+            cursor: not-allowed;
+        }
+        .btn-pages{
+            margin: 10px 0 0 0;
+            padding:3px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="list-title">
+            <span class="time">2022-11-23</span>
+            <span class="jobname">教师:</span>
+            <span class="name">秦艾德</span>
+        </div>
+        <div class="list-box">
+            <ul>
+            </ul>
+            <!-- <button class="btn">加载更多</button> -->
+            <div class="tray">
+                <!-- <input type="button" class="btn-pages" value="1"> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟数据
+        var data = [
+            { infoTitle:"新闻标题1",infoTime:"新闻时间1"},
+            { infoTitle:"新闻标题2",infoTime:"新闻时间2"},
+            { infoTitle:"新闻标题3",infoTime:"新闻时间3"},
+            { infoTitle:"新闻标题4",infoTime:"新闻时间4"},
+            { infoTitle:"新闻标题5",infoTime:"新闻时间5"},
+            { infoTitle:"新闻标题6",infoTime:"新闻时间6"},
+            { infoTitle:"新闻标题7",infoTime:"新闻时间7"},
+            { infoTitle:"新闻标题8",infoTime:"新闻时间8"},
+            { infoTitle:"新闻标题9",infoTime:"新闻时间9"},
+            { infoTitle:"新闻标题0",infoTime:"新闻时间0"},
+        ]
+        // 获取加载更多按钮
+        const btn = document.querySelector(".btn");
+        const tempUl = document.querySelector("ul");
+        const tray = document.querySelector(".tray");
+        console.log(tray)
+        console.log()
+        // 初始化页面
+        let pageIdx = 1;
+        let pageNum = 4;
+        let maxPage = Math.ceil(data.length / pageNum);
+
+
+        var urlObj =  getUrlObj();
+        pageIdx = urlObj.pageIdx;
+        // 阈值
+        var tempLength = pageIdx*pageNum;
+        if(tempLength>data.length){
+            tempLength=data.length
+        }
+        
+        // 渲染底部菜单
+        renderMenuPan();
+        // 渲染页面
+        renderPage()
+        function renderPage(){
+            
+
+            var tempData = data.slice((pageIdx-1)*pageNum,pageIdx*pageNum);
+            for(let i=0; i<tempData.length;i++){
+                let arr = `
+                    <li>
+                        <div>
+                            <span class="left-title">${tempData[i].infoTitle}</span>
+                            <span class="right-time">${tempData[i].infoTime}</span>
+                        </div>
+                    </li>
+                `
+                tempUl.innerHTML += arr;
+            }
+        }
+        //工具函数 渲染菜单
+        function renderMenuPan(){
+            // 阈值
+            if(pageIdx>maxPage){
+                pageIdx = maxPage
+            }else if(pageIdx<1){
+                pageIdx = 1;
+            }
+            // 首页
+            let firstPage = document.createElement("a");
+            firstPage.href=`?pageIdx=${1}&pageNum=${pageNum}`;
+            firstPage.innerHTML = "首页"
+            tray.appendChild(firstPage);
+            // 首页结束
+            // 上一页
+            let pvePage = document.createElement("a");
+            pvePage.href=`?pageIdx=${pageIdx-1}&pageNum=${pageNum}`;
+            pvePage.innerHTML = "上一页"
+            tray.appendChild(pvePage);
+            // 上一页结束
+            for(let i=0; i<maxPage;i++){
+                let btninput = document.createElement("a");
+                btninput.href = `?pageIdx=${i+1}&pageNum=4`;
+                if(pageIdx == i+1){
+                    btninput.style.background="green";
+                }
+                // btninput.setAttribute("type","button");
+                btninput.innerHTML = i+1;
+                tray.appendChild(btninput);
+            }
+
+            // 下一页
+            let nextPage = document.createElement("a");
+            nextPage.href=`?pageIdx=${+pageIdx+1}&pageNum${pageNum}`;
+            nextPage.innerHTML = "下一页";
+            tray.appendChild(nextPage);
+            // 尾页
+            let lastPage = document.createElement("a");
+            lastPage.href=`?pageIdx=${maxPage}&pageNum${pageNum}`;
+            lastPage.innerHTML = "尾页";
+            tray.appendChild(lastPage);
+        }
+        //工具函数 获取地址栏信息并构成对象输出
+        function getUrlObj(){
+            // 获取地址栏中的pageIdx;
+            if(window.location.href.indexOf("?") != -1){
+                var urlStr = window.location.href;
+                var searchStr = urlStr.split('?')[1];
+                var tempObj = {}
+                var keyvalueArr = searchStr.split('&');
+                for(let i=0; i<keyvalueArr.length;i++){
+                    var tempArr = keyvalueArr[i].split("=");
+                    console.log(tempArr[0],tempArr[1]);
+                    tempObj[tempArr[0]] = tempArr[1];
+                }
+                return tempObj
+            }else{
+                return { pageIdx:1,pageNum:4 };
+            }
+        }
+    </script>
+</body>
+</html>

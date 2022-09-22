@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><div class="curr">网站首页</div></li>
+            <li><div>新闻动态中心</div></li>
+            <li><div>产品展示</div></li>
+            <li><div>案例欣赏</div></li>
+            <li><div>联系我们</div></li>
+            <li><div>留言社区</div></li>
+        </ul>
+        <div class="slidebg"></div>
+    </nav>
+    <style>
+        *{margin:0;padding:0;list-style:none;box-sizing:border-box}
+        nav{background:#FF6600;}
+        ul{display:flex;justify-content:center;}
+        li>div{padding:10px 20px;margin:0px 5px;border-radius:10px;color:#222;transition: all .2s;}
+        li{z-index:99;}
+        .slidebg{width:10px;height:35px;background:black;border-radius:30px;position:absolute;top:3px;left:0px; transition: all .2s}
+        .curr{color:#fff;}
+    </style>
+    <script>
+        const list = document.querySelectorAll('li>div');
+        const curr = document.querySelector('.curr');
+        const slidebg = document.querySelector('.slidebg');
+        slidebg.style.cssText=`width:${list[0].offsetWidth}px;left:${list[0].offsetLeft}px`;//初始化 使得开始的黑色框体再第一个标题下面
+        for(let i = 0;i< list.length;i++){
+            //鼠标移入事件
+            list[i].addEventListener('mouseenter',()=>{
+                for(let j=0; j<list.length;j++){
+                    list[j].classList.remove('curr');//先移除所有的curr
+                }
+                list[i].classList.add('curr');//给当前标题添加curr
+                if(slidebg.offsetLeft < list[i].offsetLeft){  //判断向前一移动还是向后移动
+                    slidebg.style.width = list[i].offsetWidth + list[i].offsetLeft - slidebg.offsetLeft+'px'; //当前宽度+距离页面左边宽度-黑背景距页面左边宽度
+                    setTimeout(()=>{
+                        slidebg.style.width= `${list[i].offsetWidth}px`;
+                        slidebg.style.left = `${list[i].offsetLeft}px`;
+                    },200)
+                }else{
+                    slidebg.style.width = list[i].offsetWidth - list[i].offsetLeft + slidebg.offsetLeft+'px'; //当前宽度-距离页面左边宽度+黑背景距页面左边宽度
+                    slidebg.style.left = `${list[i].offsetLeft}px`; // 长度和位置一起变
+                    setTimeout(()=>{
+                        slidebg.style.width= `${list[i].offsetWidth}px`;//后来缩长度
+                    },300)
+                }
+            })
+        }
+    </script>
+</body>
+</html>

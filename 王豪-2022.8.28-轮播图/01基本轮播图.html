@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="lbbox">
+        <div class="img-box">
+            <img class="img" src="img/lb1.jpg" />
+            <img class="img" src="img/lb2.jpg" />
+            <img class="img" src="img/lb3.jpg" />
+            <img class="img" src="img/lb4.jpg" />
+        </div>
+        <p class="nums">n</p>
+        <div class="leftbtn">&lt;</div>
+        <div class="rightbtn">&gt;</div>
+        <ul>
+            <li><div class="dian"></div></li>
+            <li><div class="dian"></div></li>
+            <li><div class="dian"></div></li>
+            <li><div class="dian"></div></li>
+        </ul>
+    </div>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            box-sizing:border-box;
+        }
+        .lbbox{
+            width:300px;
+            height:200px;
+            background:green;
+            margin:0 auto;
+            /* overflow:hidden; */
+            position:relative;
+        }
+        .img{
+            /* float:left; */
+            position:absolute;
+            opacity:0;
+        }
+        .nums{
+            position:absolute;
+            top:20px;
+            left:140px;
+            color:hotpink;
+            font-size:30px;
+        }
+        .leftbtn,
+        .rightbtn{
+            width:40px;
+            height:25px;
+            background:orange;
+            position:absolute;
+            top:80px;
+            text-align:center;
+            border-radius:30px;
+            color:#fff;
+        }
+        .leftbtn{
+            left:5px;
+        }
+        .rightbtn{
+            left:255px;
+        }
+        ul{
+            position:absolute;
+            bottom:20px;
+            left:110px;
+            display:flex;
+        }
+        .dian{
+            margin:0 3px;
+            width:10px;
+            height:10px;
+            background:black;
+            border-radius:50%;
+        }
+
+        .curr{
+            background:orangered
+        }
+        .current{
+            opacity:1;
+        }
+    </style>
+    
+    <script>
+        const lbbox = document.querySelector('.lbbox');
+        console.log(lbbox)
+        const imgs = document.querySelectorAll('.img');
+        const dians = document.querySelectorAll('.dian');
+        const rightbtn = document.querySelector('.rightbtn');
+        const leftbtn = document.querySelector('.leftbtn');
+        let dtm = 'right';
+        let showidx = 0;
+        let nums = document.querySelector('.nums');
+        console.log(nums.innerHTML)
+        //初始化
+        imgs[0].classList.add('current');
+        dians[0].classList.add('curr');
+        // 点击左右按钮
+        clickbtn()
+        function clickbtn(){
+            rightbtn.addEventListener('click',function(){
+                rigbt()
+            })
+            
+            leftbtn.addEventListener('click',function(){
+                letbt()
+            })
+        }
+        for(let i=0;i<dians.length;i++){
+            dians[i].addEventListener('mouseenter',function(){
+                imgs[showidx].classList.remove('current');
+                dians[showidx].classList.remove('curr');
+                showidx = i;
+                imgs[showidx].classList.add('current');
+                dians[showidx].classList.add('curr');
+                
+            })
+        }
+
+        // 向左滚动
+        function letbt(){
+            dtm = 'left';
+            imgs[showidx].classList.remove('current');
+            dians[showidx].classList.remove('curr');
+            showidx--;
+            if(showidx < 0){
+                showidx = imgs.length-1;
+            }
+            imgs[showidx].classList.add('current');
+            dians[showidx].classList.add('curr');
+            nums.innerHTML = showidx;
+        }
+        // 向右滚动
+        function rigbt(){
+            dtm = 'right';
+            imgs[showidx].classList.remove('current');
+            dians[showidx].classList.remove('curr');
+            showidx++;
+            if(showidx == imgs.length){
+                showidx = 0;
+            }
+            imgs[showidx].classList.add('current');
+            dians[showidx].classList.add('curr');
+            nums.innerHTML = showidx;
+        }
+        let goLoop;
+        function goLoopfunc(){
+            goLoop = setInterval(()=>{
+                dtm == 'right'? rigbt() : letbt()
+            },1000)
+        }
+        // 当移入轮播图时停止播放
+        lbbox.addEventListener('mouseenter',function(){
+            clearInterval(goLoop)
+        })
+        lbbox.addEventListener('mouseleave',function(){
+            goLoopfunc();
+        })
+        goLoopfunc();
+    </script>
+</body>
+</html>

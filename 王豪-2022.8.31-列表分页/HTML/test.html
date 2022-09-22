@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .wzcon {
+            width: 800px;
+            height: auto;
+            margin: 0 auto;
+            overflow: hidden;
+            text-align: left;
+            background: #fff;
+            padding: 5px;
+        }
+
+        .wzcon ul.list {
+            overflow: hidden;
+        }
+
+        .wzcon ul.list li {
+            width: 150px;
+            height: 150px;
+            margin: 5px;
+            float: left;
+            overflow: hidden;
+        }
+
+        .wzcon ul.list li img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wzcon ul.list p {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .wzcon .more {
+            overflow: hidden;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .wzcon .more a {
+            display: block;
+            width: 80px;
+            padding: 8px 0;
+            color: #fff;
+            margin: 0 auto;
+            background: #333;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        .wzcon .more a:hover {
+            text-decoration: none;
+            background: red;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wzcon">
+        <div class="hidden">
+            <li><img src="images/1px.gif" realSrc="images/500x500-1.png" width="150" height="150" /></li>
+            <li><img src="images/1px.gif" realSrc="images/500x500-1.png" width="150" height="150" /></li>
+            <li><img src="images/1px.gif" realSrc="images/500x500-1.png" width="150" height="150" /></li>
+            <li><img src="images/1px.gif" realSrc="images/500x500-1.png" width="150" height="150" /></li>
+            <li><img src="images/1px.gif" realSrc="images/500x500-1.png" width="150" height="150" /></li>
+            <li><img src="images/1px.gif" realSrc="images/500x500-2.png" width="150" height="150" /></li>
+        </div>
+        <ul class="list">数据加载中，请稍后...</ul>
+        <div class="more"><a href="javascript:;" onClick="wzcon.loadMore();">加载更多</a></div>
+    </div>
+    <script src="https://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        var _content = []; //临时存储li循环内容
+        var wzcon = {
+            _default: 3, //默认显示图片个数
+            _loading: 2, //每次点击按钮后加载的个数
+            init: function () {
+                var lis = $(".wzcon .hidden li");
+                $(".wzcon ul.list").html("");
+                for (var n = 0; n < wzcon._default; n++) {
+                    lis.eq(n).appendTo(".wzcon ul.list");
+                }
+                $(".wzcon ul.list img").each(function () {
+                    $(this).attr('src', $(this).attr('realSrc'));
+                })
+                for (var i = wzcon._default; i < lis.length; i++) {
+                    _content.push(lis.eq(i));
+                }
+                $(".wzcon .hidden").html("");
+            },
+            loadMore: function () {
+                var mLis = $(".wzcon ul.list li").length;
+                for (var i = 0; i < wzcon._loading; i++) {
+                    var target = _content.shift();
+                    if (!target) {
+                        $('.wzcon .more').html("<p>全部加载完毕...</p>");
+                        break;
+                    }
+                    $(".wzcon ul.list").append(target);
+                    $(".wzcon ul.list img").eq(mLis + i).each(function () {
+                        $(this).attr('src', $(this).attr('realSrc'));
+                    });
+                }
+            }
+        }
+        wzcon.init();
+    </script>
+</body>
+
+</html>

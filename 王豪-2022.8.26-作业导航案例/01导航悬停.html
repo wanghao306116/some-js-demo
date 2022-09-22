@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><div class="curr">首页</div></li>
+            <li><div>关于我们</div></li>
+            <li><div>产品中心</div></li>
+            <li><div>案例展示</div></li>
+            <li><div>联系我们</div></li>
+        </ul>
+    </nav>
+    <style>
+        *{margin:0;padding:0;list-style:none;box-sizing:border-box}
+        nav{background:#FF6600;}
+        ul{display:flex;justify-content:center;}
+        li>div{padding:10px 20px;margin:10px 5px;border-radius:10px;color:#fff;transform: all 1s;}
+        .curr{color:#FF6600;background:#fff;}
+    </style>
+    <script>
+        const list = document.querySelectorAll('li>div');
+        const curr = document.querySelector('.curr')
+        for(let i = 0;i< list.length;i++){
+            //添加鼠标移入事件
+            list[i].addEventListener('mouseenter',()=>{
+                for(let j=0;j<list.length;j++){
+                    list[j].classList.remove('curr');
+                }
+                list[i].style.cssText = 'color:black;background:#fff';
+             })
+             //添加鼠标移除事件
+            list[i].addEventListener('mouseleave',()=>{
+                list[i].style.cssText = 'background:';
+                list[i].classList.add('curr')
+            })
+        }
+        
+    </script>
+</body>
+</html>

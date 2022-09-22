@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div class="content">
+        <div class="box"><input class="inp" type="text" placeholder="place" /><img src="1.png"></div>
+        
+        <div class="selects">
+            <ul>
+                <!-- <li>123</li> -->
+            </ul>
+        </div>
+    </div>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        body{
+            display:flex;
+            justify-content:center;
+        }
+        .content{
+            /* display:flex; */
+        }
+        .box{
+            border:1px solid black;
+            border-radius:5px;
+            display:flex;
+        }
+        .inp{
+            max-width:300px;
+            width:250px;
+            padding:8px 10px;
+            outline:0;
+            border: 0;
+            border-right:1px solid black;
+            flex:1;
+        }
+        img{
+            padding:2px;
+            width:25px;
+            vertical-align:middle;
+        }
+        ul{
+            border:1px solid skyblue;
+        }
+        ul li{
+            padding: 3px 10px;
+            background:lightblue;
+            margin:1px 0;
+        }
+        span{
+            color:red;
+        }
+    </style>
+    <script>
+        let data = [
+            '论,李白喝酒与不喝酒写诗有区别吗?',
+            '谈,李白是刺客还是诗人?',
+            '李白的剑是什么剑?',
+            '白居易和欧阳修群殴过李白吗?',
+            '酒醒了以后李白还记得自己写的诗吗?'
+        ]
+        const imgbtn = document.querySelector('img'); // 获取到按钮
+        
+        const inp = document.querySelector('.inp');
+        const uls = document.querySelector('ul');
+        inp.addEventListener('input',()=>{
+            // 把inputvalue存起来;  关键词
+            let ipv = inp.value;
+            // 1.将输入的字符以空格分开
+            let seleword = ipv.split(' ');
+            // 2.遍历seleword去data里匹配;
+            for(let i=0;i<seleword.length;i++){
+                for(let j=0;j<data.length;j++){
+                    let res = data[j].indexOf(seleword);
+                    console.log(seleword)
+                    if(res != -1){
+                        // console.log(data[j]);
+                        let jie = data[j].replace(seleword[i],`<span>${seleword[i]}</span>`)
+                        console.log(jie)
+                        let lis = document.createElement('li');
+                        // lis.innerHTML = data[j];
+                        
+                        lis.innerHTML = '';
+                        lis.innerHTML = jie;
+                        uls.appendChild(lis);
+                    }
+                }
+                
+            }
+        })
+
+        
+    </script>
+</body>
+</html>

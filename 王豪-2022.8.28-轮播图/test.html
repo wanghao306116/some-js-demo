@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="lbbox">
+        <div class="img">
+            <img src="img/lb (1).jpg" />
+            <img src="img/lb (2).jpg" />
+            <img src="img/lb (4).jpg" />
+            <img src="img/lb (5).jpg" />
+            <img src="img/lb (1).jpg" />
+        </div>
+        <p class="nums">n</p>
+        <div class="leftbtn">&lt;</div>
+        <div class="rightbtn">&gt;</div>
+        <ul>
+            <li><div class="dian"></div></li>
+            <li><div class="dian"></div></li>
+            <li><div class="dian"></div></li>
+            <li><div class="dian"></div></li>
+        </ul>
+    </div>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            
+        }
+        .lbbox{
+            width:300px;
+            height:200px;
+            background:green;
+            margin:0 auto;
+            overflow:hidden;
+            position:relative;
+        }
+        .img{
+            display:flex;
+        }
+        .nums{
+            position:absolute;
+            top:20px;
+            left:140px;
+            color:hotpink;
+            font-size:30px;
+        }
+        .leftbtn,
+        .rightbtn{
+            width:40px;
+            height:25px;
+            background:orange;
+            position:absolute;
+            top:80px;
+            text-align:center;
+            border-radius:30px;
+            color:#fff;
+        }
+        .leftbtn{
+            left:5px;
+        }
+        .rightbtn{
+            left:255px;
+        }
+        ul{
+            position:absolute;
+            bottom:20px;
+            left:110px;
+            display:flex;
+        }
+        .dian{
+            margin:0 3px;
+            width:10px;
+            height:10px;
+            background:black;
+            border-radius:50%;
+        }
+        .curr{
+            background:orangered
+        }
+    </style>
+    <script>
+        const dian = document.querySelectorAll('.dian');
+        dian[0].classList.add('curr')
+        for(let i=0;i<dian.length;i++){
+            // dian[i].onmouseenter = changes
+            dian[i]
+        }
+
+        function changes(_i){
+            console.log(dian[_i])
+        }
+    </script>
+</body>
+</html>

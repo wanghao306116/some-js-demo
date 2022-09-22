@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="lbox">
+        <div class="imgs">
+            <div class="box box1"></div>
+            <div class="box box2"></div>
+            <div class="box box3"></div>
+        </div>
+        <div class="btn leftbtn">左</div>
+        <div class="btn rightbtn">右</div>
+        <div class="dians">
+            <div class="dian"></div>
+            <div class="dian"></div>
+            <div class="dian"></div>
+        </div>
+    </div>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        .lbox{
+            width:300px;
+            height:200px;
+            /* overflow:hidden; */
+            background:green;
+            margin:100px auto;
+            position:relative;
+        }
+        .box1,
+        .box2,
+        .box3{
+            width:300px;
+            height:200px;
+            background:skyblue;
+            float: left;
+        }
+        .imgs{
+            width: 900px;
+        }
+        .btn{
+            position:absolute;
+            width:50px;
+            height:30px;
+            background:aqua;
+            text-align:center;
+            line-height:30px;
+        }
+        .leftbtn{
+            top:75px;
+        }
+        .rightbtn{
+            top:75px;
+            left:250px;
+        }
+        .dians{
+            position:absolute;
+            left:45%;
+            bottom:10px;
+        }
+        .dian{
+            width:10px;
+            height:10px;
+            background:black;
+            border-radius: 50%;
+            float:left;
+            
+        }
+        .curr{
+            width:20px;
+            background:orange;
+        }
+        /* .curres{
+            
+        } */
+    </style>
+    <script>
+        const lbox = document.querySelector('.lbox');   //获取最外部盒子
+        const imgs = document.querySelector('.imgs')
+        const boxs = document.querySelectorAll('.box')
+        let index = 0;
+        let data = ['lb1.jpg','lb2.jpg','lb3.jpg','lb4.jpg'];  //索要轮播的图片地址
+        console.log(imgs)
+        imgs.offsetLeft -= 300+'px'
+        console.log(imgs.offsetLeft)
+        for(let i=0;i<data.length;i++){
+            imgs
+            
+
+            
+        }
+    </script>
+
+</body>
+</html>

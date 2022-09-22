@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/01.css">
+    <title>Document</title>
+    <style>
+        .notouch{
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="list-title">
+            <span class="time">2022-11-23</span>
+            <span class="jobname">教师:</span>
+            <span class="name">秦艾德</span>
+        </div>
+        <div class="list-box">
+            <ul>
+            </ul>
+            <button class="btn">加载更多</button>
+        </div>
+    </div>
+
+    <script>
+        // 模拟数据
+        var data = [
+            { infoTitle:"新闻标题1",infoTime:"新闻时间1"},
+            { infoTitle:"新闻标题2",infoTime:"新闻时间2"},
+            { infoTitle:"新闻标题3",infoTime:"新闻时间3"},
+            { infoTitle:"新闻标题4",infoTime:"新闻时间4"},
+            { infoTitle:"新闻标题5",infoTime:"新闻时间5"},
+            { infoTitle:"新闻标题6",infoTime:"新闻时间6"},
+            { infoTitle:"新闻标题7",infoTime:"新闻时间7"},
+            { infoTitle:"新闻标题8",infoTime:"新闻时间8"},
+            { infoTitle:"新闻标题9",infoTime:"新闻时间9"},
+            { infoTitle:"新闻标题0",infoTime:"新闻时间0"},
+        ]
+        // 获取加载更多按钮
+        const btn = document.querySelector(".btn");
+        const tempUl = document.querySelector("ul");
+        console.log()
+        let pageIdx = 1;
+        let pageNum = 4;
+        let maxPage = Math.ceil(data.length / pageNum);
+        var urlObj =  getUrlObj();
+        pageIdx = urlObj.pageIdx;
+        // 阈值
+        var tempLength = pageIdx*pageNum;
+        if(tempLength>data.length){
+            tempLength=data.length
+        }
+        for(let i=0; i<tempLength;i++){
+            let arr = `
+                <li>
+                    <div>
+                        <span class="left-title">${data[i].infoTitle}</span>
+                        <span class="right-time">${data[i].infoTime}</span>
+                    </div>
+                </li>
+            `
+            tempUl.innerHTML += arr;
+        }
+        // 寻找功能入口
+        btn.onclick = function(){
+            // 阈值判断
+            // 页码增加;
+            pageIdx++;
+            if(pageIdx == maxPage){
+                btn.innerHTML = "暂无更多数据";
+                btn.setAttribute('disabled',true)
+                btn.classList.add('notouch');
+                return;
+            }
+            // 把信息给地址栏
+            window.location.href = `?pageIdx=${pageIdx}&pageNum=${pageNum}`;
+        }
+
+        //工具函数 获取地址栏信息并构成对象输出
+        function getUrlObj(){
+            // 获取地址栏中的pageIdx;
+            if(window.location.href.indexOf("?") != -1){
+                var urlStr = window.location.href;
+                var searchStr = urlStr.split('?')[1];
+                var tempObj = {}
+                var keyvalueArr = searchStr.split('&');
+                for(let i=0; i<keyvalueArr.length;i++){
+                    var tempArr = keyvalueArr[i].split("=");
+                    console.log(tempArr[0],tempArr[1]);
+                    tempObj[tempArr[0]] = tempArr[1];
+                }
+                return tempObj
+            }else{
+                return { pageIdx:1,pageNum:4 };
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+            box-sizing:border-box;
+        }
+        .tab{
+            width:600px;
+            /* border:1px solid red; */
+            margin:100px auto;
+        }
+        .ulList{
+            display:flex;
+
+        }
+        .ulList li{
+            background:#F1F1F1;
+            padding:10px 20px;
+            border:1px solid #aaa;
+            margin:0 10px 0 0px;
+            color:blue;
+            z-index:9;
+        }
+        .ulList li.cons{
+            background:#fff;
+            border-bottom:1px solid #fff;
+        }
+        .ulList li>div:hover{
+            color:red;
+        }
+        .content{
+            border: 1px solid #aaa;
+            position:relative;
+            top:-1px;
+        }
+        .content>div{
+            width:600px;
+            text-align:center;
+            display:none;
+        }
+        .content>.curr{
+            display:block;
+        }
+
+
+        .smalltab{
+            margin:50px auto;
+            width:500px;
+        }
+        .ulList2{
+            display:flex;
+            justify-content:center;
+            
+        }
+        .ulList2 li{
+            margin:0 5px;
+            background:#F1F1F1;
+            padding:10px 20px;
+            border:1px solid #aaa;
+            /* margin:0 10px 0 0px; */
+            color:blue;
+            z-index:9;
+
+        }
+        .ulList2 li.cons1{
+            background:#fff;
+            border-bottom:1px solid #fff;
+        }
+        .ulList2 li>div:hover{
+            color:red;
+        }
+        .smallcontent{
+            border: 1px solid #aaa;
+            position:relative;
+            top:-1px;
+        }
+        .smallcontent>div{
+            display:none;
+            padding:30px 0;
+        }
+        .smallcontent>.curr1{
+            display:block;
+        }
+    </style>
+</head>
+<body>
+    <div class="tab">
+        <ul class="ulList">
+            <li ><div>电器</div></li>
+            <li ><div>数码</div></li>
+            <li><div>家居</div></li>
+            <li class="cons"><div>男装</div></li>
+        </ul>
+        <div class="content">
+            <div class="curr">
+                <div class="smalltab">
+                    <ul class="ulList2">
+                        <li class="cons1"><div>电动牙刷</div></li>
+                        <li><div>电磁炉</div></li>
+                        <li><div>电烤箱</div></li>
+                        <li><div>电饭锅</div></li>
+                    </ul>
+                    <div class="smallcontent">
+                        <div class="curr1">c</div>
+                        <div>d</div>
+                        <div>b</div>
+                        <div>a</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="smalltab">
+                    <ul class="ulList2">
+                        <li class="cons1"><div>电脑</div></li>
+                        <li><div>相机</div></li>
+                        <li><div>手机</div></li>
+                        <li><div>显示屏</div></li>
+                    </ul>
+                    <div class="smallcontent">
+                        <div class="curr1">c</div>
+                        <div>d</div>
+                        <div>b</div>
+                        <div>a</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="smalltab">
+                    <ul class="ulList2">
+                        <li class="cons1"><div>床</div></li>
+                        <li><div>床头柜</div></li>
+                        <li><div>桌子</div></li>
+                        <li><div>椅子</div></li>
+                    </ul>
+                    <div class="smallcontent">
+                        <div class="curr1">c</div>
+                        <div>d</div>
+                        <div>b</div>
+                        <div>a</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="smalltab">
+                    <ul class="ulList2">
+                        <li class="cons1"><div>裤子</div></li>
+                        <li><div>短袖</div></li>
+                        <li><div>衬衫</div></li>
+                        <li><div>皮鞋</div></li>
+                    </ul>
+                    <div class="smallcontent">
+                        <div >c</div>
+                        <div class="curr1">d</div>
+                        <div>b</div>
+                        <div>a</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const list = document.querySelectorAll('.ulList>li');
+        const items = document.querySelectorAll('.content>div')
+        console.log(items)
+        for(let i=0;i<list.length;i++){
+            list[i].addEventListener('click',function(e){
+                for(let j=0; j<list.length;j++){
+                    list[j].classList.remove('cons');
+                    items[j].classList.remove('curr');
+                }
+                list[i].classList.add('cons');
+                items[i].classList.add('curr');
+            })
+        }
+        const list2 = document.querySelectorAll('.ulList2>li');
+        const items2 = document.querySelectorAll('.smallcontent>div')
+        for(let i=0;i<list.length;i++){
+            list2[i].addEventListener('click',function(e){
+                for(let j=0; j<list2.length;j++){
+                    list2[j].classList.remove('cons1');
+                    items2[j].classList.remove('curr1');
+                }
+                list2[i].classList.add('cons1');
+                items2[i].classList.add('curr1');
+            })
+        }
+    </script>
+</body>
+</html>

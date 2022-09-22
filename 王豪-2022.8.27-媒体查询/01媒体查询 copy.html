@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div class="content">
+        <div class="box"><input class="inp" type="text" placeholder="place" /><img src="1.png"></div>
+        
+        <div class="selects">
+            <ul>
+                <!-- <li>123</li> -->
+            </ul>
+        </div>
+    </div>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        body{
+            display:flex;
+            justify-content:center;
+        }
+        .content{
+            /* display:flex; */
+        }
+        .box{
+            border:1px solid black;
+            border-radius:5px;
+            display:flex;
+        }
+        .inp{
+            max-width:300px;
+            width:250px;
+            padding:8px 10px;
+            outline:0;
+            border: 0;
+            border-right:1px solid black;
+            flex:1;
+        }
+        img{
+            padding:2px;
+            width:25px;
+            vertical-align:middle;
+        }
+        ul{
+            /* border:1px solid skyblue; */
+        }
+        ul li{
+            padding: 3px 10px;
+            background:lightblue;
+            margin:1px 0;
+        }
+        span{
+            color:red;
+        }
+    </style>
+    <script>
+        let data = [
+            '论,李白喝酒与不喝酒写诗有区别吗?',
+            '谈,李白是刺客还是诗人?',
+            '李白的剑是什么剑?',
+            '白居易和欧阳修群殴过李白吗?',
+            '酒醒了以后李白还记得自己写的诗吗?'
+        ]
+        const imgbtn = document.querySelector('img'); // 获取到按钮
+        
+        const znInput = document.querySelector('input');
+        const znUl = document.querySelector('ul');
+        console.log(znUl)
+        //
+        znInput.addEventListener('input',function(){
+            //注意初始化
+            // 获取用户输入的关键字
+            let keywords = this.value;
+            //判空  /  空格
+            if(this.value.length == 0 || keywords.trim() == ''){
+                znUl.innerHTML = '';
+                return;
+            }
+            //去除关键字左右两端空格
+            keywords = keywords.trim();   
+            //去除关键字中间的空格
+            keywords = trimAll(keywords);
+            //拆分关键字
+            let keysArr = keywords.split(' ');
+            //数组去重
+            keysArr = clearRepeat(keysArr);
+            //用关键字匹配
+            let resultArr = matchResult_fromData_byKeysArr(data,keysArr);
+            //关键字标红
+            resultArr = changeRed(resultArr, keysArr);
+            //渲染到页面
+            renderData(resultArr);
+        })
+
+        // 工具 去字符串中间空格
+        function trimAll(_keywords){
+            // keyswords: key    key
+            for(let i=0; _keywords.indexOf("  ")!=-1; i++){
+                //如果存在,就替换成1个
+                _keywords = _keywords.replace('  ',' ');
+            }
+            return _keywords; //  key key
+        }
+        //数组去重
+        function clearRepeat(_keysArr){
+            let finalArr = [];
+            for(let i = 0; i<_keysArr.length;i++){
+                if(!finalArr.includes(_keysArr[i])){
+                    finalArr.push(_keysArr[i]);
+                }
+            }
+            return finalArr;
+        }
+        //关键字匹配
+        function  matchResult_fromData_byKeysArr(_data,_keysArr){
+            //创建最终返回的数组
+            let finalArr = []
+            for(let i=0;i<data.length;i++){
+                let flag = true;
+                for(let j=0;j<_keysArr.length;j++){
+                    if(_data[i].indexOf(_keysArr[j])==-1){
+                        flag=false;
+                        break;
+                    }
+                }
+                //内层循环结束查看状态守卫
+                //若是true那么假设成立
+                if(flag){
+                    finalArr.push(_data[i]);
+                }
+            }
+            return finalArr;
+        }
+        // 将匹配的所有关键字标红
+        function changeRed(_resultArr,_keysArr){
+            for(let i=0;i<_resultArr.length;i++){
+                for(let j=0;j<_keysArr.length;j++){
+                    _resultArr[i] = _resultArr[i].split(_keysArr[j]).join(`<span>${_keysArr[j]}</span>`);
+                }
+            }
+            return _resultArr;
+        }
+        //渲染
+        function renderData(_resultArr){
+            for(let i=0; i<_resultArr.length;i++){
+                var tempLi = document.createElement('li');
+                tempLi.innerHTML = _resultArr[i];
+                znUl.appendChild(tempLi)
+            }
+        }
+
+
+    </script>
+</body>
+</html>
